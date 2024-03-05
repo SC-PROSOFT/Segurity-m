@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 /* views */
-import {Login, Home} from '../views';
+import {Login, Home, Loading} from '../views';
 
 /* components */
 import {Menu_} from '../components';
@@ -14,6 +14,25 @@ export const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
+          options={{
+            headerShown: false,
+            title: 'Contraseña',
+            headerTitle: 'Autenticación Prosoft',
+            headerTitleAlign: 'left',
+            headerStyle: {
+              backgroundColor: '#365AC3',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 24,
+            },
+            headerRight: () => <Menu_ />,
+          }}></Stack.Screen>
+
         <Stack.Screen
           name="Login"
           component={Login}
