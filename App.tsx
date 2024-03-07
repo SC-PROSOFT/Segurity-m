@@ -38,3 +38,10 @@ export default function App() {
 }
 
 //colors: #30313498 #DE3A45 #303134 #365AC3 #19C22A
+
+/*
+paleta
+lider: #303134
+monocromaticos:  #4A5A88 #43495E #445FB3 #2F5BDD
+*/
+

@@ -15,8 +15,6 @@ export const DecisionAlert = () => {
   const {visible, type, description, textButton, executeFunction} =
     decisionAlertConfig;
 
-  console.log('mi decison alert: ', visible);
-
   const titleAlert = () => {
     type type = 'error' | 'success' | 'info';
 
@@ -45,10 +43,7 @@ export const DecisionAlert = () => {
   });
 
   return (
-    <Dialog
-      visible={visible}
-      onDismiss={hideDecisionAlert}
-      style={{}}>
+    <Dialog visible={visible} onDismiss={hideDecisionAlert} style={{}}>
       <Dialog.Title>{titleAlert()}</Dialog.Title>
 
       <Dialog.Content>

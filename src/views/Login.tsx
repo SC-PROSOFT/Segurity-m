@@ -9,13 +9,12 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
 /* components */
 import {Input_, Button_} from '../components';
-
 /* context */
 import {infoAlertContext} from '../context';
-
+/* local_database */
+import {asesoresService} from '../queries/local_database/services';
 /* interfaces */
 interface userInfo {
   user: string;
@@ -58,7 +57,11 @@ const Form: React.FC<any> = ({
         handleInputChange={handleInputChange}
       />
       <View style={{marginTop: 15}}>
-        <Button_ value="Iniciar sesion" pressNormalButton={toggleLoginButton} />
+        <Button_
+          value="Iniciar sesion"
+          pressNormalButton={toggleLoginButton}
+          colorButton="#445FB3"
+        />
       </View>
     </View>
   );
@@ -74,6 +77,7 @@ const Login: React.FC = () => {
     password: '',
   });
 
+  /* procedure */
   const handleInputChange = (name: string, text: string) => {
     setInputs(prevState => ({...prevState, [name]: text}));
   };
@@ -86,7 +90,6 @@ const Login: React.FC = () => {
     if (user == '99' && password == '641218') {
       navigation.replace('Home');
     } else {
-      // alerta de contrasena invalida
       showInfoAlert({
         visible: true,
         type: 'error',
@@ -146,7 +149,7 @@ const Login: React.FC = () => {
     },
     title2: {
       fontWeight: 'bold',
-      color: '#365AC3',
+      color: '#445FB3',
       fontSize: 28,
       marginLeft: 7,
     },
