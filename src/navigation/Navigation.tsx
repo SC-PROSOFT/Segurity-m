@@ -56,7 +56,7 @@ export const Navigation = () => {
             headerTintColor: '#fff',
             headerTitleStyle: {
               fontWeight: 'bold',
-              fontSize: 24,
+              fontSize: 20,
             },
             headerRight: () => <Menu_ />,
           }}></Stack.Screen>

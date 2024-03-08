@@ -1,48 +1,44 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Circle} from 'react-native-progress';
-import LottieView from 'lottie-react-native';
-
-const {width, height} = Dimensions.get('window');
-const smallerDimension = Math.min(width, height);
-const circleSize = smallerDimension * 0.5 * 0.8;
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
 export const Home = () => {
-  const animationRef = useRef<LottieView>(null);
+  const days = dayjs().locale('es').format();
 
-  const [passwordRemaining, setPasswordRemaining] = useState<number>(0.85);
+  const [date, setDate] = useState<any>(days);
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      fillProgressCircle();
-    }, 2000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-  useEffect(() => {
-    animationRef.current?.play();
-    animationRef.current?.play(30, 120);
+    cargarFecha(date);
   }, []);
 
-  const fillProgressCircle = () => {
-    const currentDate = new Date();
-    const horas = currentDate.getHours();
-    const minutos = currentDate.getMinutes();
+  const cargarFecha = (dateScope: any) => {
+    const date = new Date(dateScope);
 
-    // Convertir la hora a minutos totales y agregar los minutos
-    const minutosTotales = horas * 60 + minutos;
+    const meses = [
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'julio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre',
+    ];
 
-    // Calcular el porcentaje
-    const porcentaje = 1 - minutosTotales / (24 * 60);
+    const mes = meses[date.getMonth()];
+    const dia = date.getDate();
+    const año = date.getFullYear();
 
-    // Redondear el resultado a diez decimales
-    const remaining = parseFloat(porcentaje.toString().slice(0, 10));
+    const fechaFormateada = `${mes}, ${dia}, ${año}`;
 
-    if (horas == 0 && minutos < 2) {
-      generateCurrentGebcPassword();
-    }
-
-    setPasswordRemaining(remaining);
+    setSelectedDate(fechaFormateada);
   };
 
   const generateCurrentGebcPassword = () => {
@@ -66,25 +62,63 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.passwordContainer}>
-        <Circle
-          size={100} // Tamaño del círculo
-          indeterminate={false} // Hace que la barra de carga sea indeterminada (giratoria)
-          progress={passwordRemaining}
-          color={'#365AC3'} // Color de la barra de carga
-          thickness={5} // Grosor de la barra de carga
-          borderWidth={0}
+      <View style={styles.containerDate}>
+        <DateTimePicker
+          locale={'es'}
+          mode="single"
+          date={date}
+          onChange={params => {
+            setDate(params.date);
+            cargarFecha(params.date);
+          }}
+          selectedItemColor="#d8e3ff"
+          selectedTextStyle={{color: '#365AC3', fontWeight: 'bold'}}
+          calendarTextStyle={{color: 'grey'}}
+          headerTextStyle={{color: '#303134', fontSize: 20}}
+          headerButtonColor="#303134"
+          weekDaysTextStyle={{color: '#303134'}}
+          height={250}
+        />
+        <View
           style={{
-            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
           }}>
+          <Text style={{color: 'black', fontSize: 16, margin: 15}}>
+            {selectedDate}
+          </Text>
+
+          <Button
+            mode="contained-tonal"
+            buttonColor="#d8e3ff"
+            textColor="#365AC3"
+            onPress={() => {
+              setDate(days);
+              cargarFecha(days);
+            }}>
+            Hoy
+          </Button>
+        </View>
+      </View>
+      <View style={styles.passwordContainer}>
+        <View
+          style={{
+            height: '35%',
+            backgroundColor: '#4A5A88',
+            width: '100%',
+            justifyContent: 'center',
+            borderTopEndRadius: 15,
+            borderTopLeftRadius: 15,
+          }}>
+          <Text style={styles.labelPassword}>Clave</Text>
+        </View>
+
+        <View style={{height: '65%', justifyContent: 'center'}}>
           <Text style={styles.textPassword}>
             {`SC${generateCurrentGebcPassword()}`}
           </Text>
-        </Circle>
+        </View>
       </View>
     </View>
   );
@@ -94,25 +128,37 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F5FCFF',
     width: '100%',
     height: '100%',
+    padding: 10,
+  },
+  containerDate: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 10,
   },
   passwordContainer: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
     backgroundColor: '#fff',
-    width: circleSize,
-    height: circleSize,
-    aspectRatio: 1,
-    borderRadius: 99999,
+    alignItems: 'center',
+    width: '100%',
+    height: '10%',
+    borderRadius: 20,
+    elevation: 10,
+    marginTop: 5,
+  },
+  labelPassword: {
+    fontSize: 10 * 1.3,
+    color: 'white',
+    textAlign: 'center',
   },
   textPassword: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 13 * 1.3,
+    fontSize: 16 * 1.3,
+    letterSpacing: 2,
+    fontWeight: 'bold',
     color: 'black',
   },
   title: {
