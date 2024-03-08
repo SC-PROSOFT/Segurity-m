@@ -1,7 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 
 /* local database services */
-import {asesoresService} from './services';
+import {asesoresService, otpService} from './services';
 
 const db: any = SQLite.openDatabase({name: 'localdb1'});
 
@@ -9,6 +9,7 @@ const db: any = SQLite.openDatabase({name: 'localdb1'});
 const createTables = async (): Promise<boolean> => {
   try {
     await asesoresService.createTable();
+    await otpService.createTable();
 
     return true;
   } catch (error: any) {

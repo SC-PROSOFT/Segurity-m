@@ -23,9 +23,9 @@ class AsesoresService {
     return this.asesoresController.getAll();
   }
 
-  //   async getQuantityAlmacenes(): Promise<string> {
-  //     return this.almacenesRepository.getQuantity();
-  //   }
+  async Login(id: number, contrasena: string): Promise<boolean> {
+    return this.asesoresController.login(id, contrasena);
+  }
 }
 
 const asesoresService = new AsesoresService();

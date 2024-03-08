@@ -11,7 +11,7 @@ export const createAxiosInstance = (direccionIp: string, puerto: string) => {
       'Content-Type': 'application/json',
       // Otros encabezados comunes
     },
-    timeout: 3000,
+    timeout: 3000, // poner mas tiempo aqui 🔔
   });
 
   // Crear una instancia de CancelToken y source

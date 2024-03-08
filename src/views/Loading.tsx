@@ -4,15 +4,20 @@ import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 
 /* queries */
-import {AsesoresApiService} from '../queries/api_prosoft/queries';
+import {
+  AsesoresApiService,
+  OtpApiService,
+} from '../queries/api_prosoft/queries';
 /* queries instances */
 const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025');
+const otpApiService = new OtpApiService('192.168.0.173', '5025');
+
 /* animacion */
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 /* local_database */
 import {createTables} from '../queries/local_database/local_database_config';
-import {asesoresService} from '../queries/local_database/services';
-import {IAsesor} from '../common/types';
+import {asesoresService, otpService} from '../queries/local_database/services';
+import {IAsesor, IOtp} from '../common/types';
 
 const Loading: React.FC = () => {
   const navigation: any = useNavigation();
@@ -35,6 +40,7 @@ const Loading: React.FC = () => {
     try {
       await createTables();
       await loadAsesores();
+      await loadOtp();
 
       navigation.replace('Login');
     } catch (error: any) {
@@ -52,6 +58,17 @@ const Loading: React.FC = () => {
       if (asesores.length > 0) await asesoresService.fillTable(asesores);
       return true;
     } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const loadOtp = async (): Promise<boolean> => {
+    try {
+      const otp: IOtp[] = await otpApiService._getOtp();
+      if (otp.length > 0) await otpService.fillTable(otp);
+
+      return true;
+    } catch (error) {
       throw error;
     }
   };

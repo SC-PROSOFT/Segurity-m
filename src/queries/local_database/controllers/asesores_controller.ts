@@ -8,6 +8,7 @@ interface IAsesoresController<T> {
   createTable?(): Promise<boolean>;
   fillTable(asesores: T[]): Promise<boolean>;
   getById(id: number): Promise<T>;
+  login(id: number, password: string): Promise<boolean>;
 }
 
 class AsesoresController implements IAsesoresController<IAsesor> {
@@ -38,32 +39,6 @@ class AsesoresController implements IAsesoresController<IAsesor> {
   }
 
   async fillTable(asesores: IAsesor[]): Promise<boolean> {
-    // const innerGetAsesores = () => {
-    //   return new Promise((resolve, reject) => {
-    //     db.transaction((tx: any) => {
-    //       tx.executeSql(`SELECT * FROM asesores`);
-    //     });
-    //   });
-    // };
-
-    const innerDeleteAsesores = () => {
-      return new Promise((resolve, reject) => {
-        db.transaction((tx: any) => {
-          tx.executeSql(
-            `DELETE FROM asesores`,
-            null,
-            (_: ResultSet, response: ResultSet) => {
-              console.log('borre un bloque');
-              resolve(true);
-            },
-            (error: ResultSet) => {
-              reject(new Error('Fallo borrar asesores'));
-            },
-          );
-        });
-      });
-    };
-
     const innerInsertBlockOfAsesores = (asesores: IAsesor[]) => {
       const placeholders = asesores.map(() => '(?, ?, ?, ?)').join(', ');
 
@@ -102,8 +77,6 @@ class AsesoresController implements IAsesoresController<IAsesor> {
 
     return new Promise(async (resolve, reject) => {
       try {
-        //await innerDeleteAsesores();
-
         let asesoresTemp = [];
         let contador = 0;
         const bloques = 10;
@@ -175,6 +148,33 @@ class AsesoresController implements IAsesoresController<IAsesor> {
           },
           (error: ResultSet) => {
             reject(new Error('Fallo obtener asesores'));
+          },
+        );
+      });
+    });
+  }
+
+  async login(id: number, contrasena: string): Promise<boolean> {
+    const sqlSelectStatement = `
+        SELECT * FROM asesores WHERE id= '${id}' AND contrasena= '${contrasena}';
+    `;
+
+    return new Promise((resolve, reject) => {
+      db.transaction((tx: any) => {
+        tx.executeSql(
+          sqlSelectStatement,
+          null,
+          (_: ResultSet, response: ResultSet) => {
+            console.log();
+            if (response.rows.raw().length == 0) {
+              resolve(false);
+            } else {
+              resolve(true);
+            }
+          },
+          (error: ResultSet) => {
+            console.log('el error: ', error);
+            reject(new Error('Fallo al iniciar sesion'));
           },
         );
       });

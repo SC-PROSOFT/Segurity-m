@@ -21,8 +21,6 @@ export const Home = () => {
   }, []);
   useEffect(() => {
     animationRef.current?.play();
-
-    // Or set a specific startFrame and endFrame with:
     animationRef.current?.play(30, 120);
   }, []);
 
@@ -68,17 +66,6 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={{width: '100%', height: '30%'}}>
-        <LottieView
-          ref={animationRef}
-          //source={require('../assets/pensador.json')}
-          source={require('../../assets/pensador.json')}
-          style={{width: '100%', height: '50%'}}
-          autoPlay={true}
-          loop={true}
-        />
-      </View> */}
-
       <View style={styles.passwordContainer}>
         <Circle
           size={100} // Tamaño del círculo
