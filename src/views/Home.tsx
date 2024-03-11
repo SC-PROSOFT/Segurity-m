@@ -3,13 +3,14 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 /* redux hooks */
-import {useAppSelector, useAppDispatch} from '../redux/hooks';
+import {useAppSelector} from '../redux/hooks';
 
 import {otpService} from '../queries/local_database/services';
 
 export const Home = () => {
-  const days = dayjs().locale('es').format();
+  const days = dayjs().locale('es');
 
   const objAsesor = useAppSelector(store => store.asesor.objAsesor);
 
@@ -89,6 +90,24 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.passwordContainer}>
+        <View
+          style={{
+            height: '35%',
+            backgroundColor: '#2b4bb0',
+            width: '100%',
+            justifyContent: 'center',
+            borderTopEndRadius: 15,
+            borderTopLeftRadius: 15,
+          }}>
+          <Text style={styles.labelPassword}>Clave</Text>
+        </View>
+
+        <View style={{height: '65%', justifyContent: 'center'}}>
+          <Text style={styles.textPassword}>{`${currentPassword}`}</Text>
+        </View>
+      </View>
+
       <View style={styles.containerDate}>
         <DateTimePicker
           locale={'es'}
@@ -99,7 +118,7 @@ export const Home = () => {
             cargarFecha(params.date);
           }}
           selectedItemColor="#d8e3ff"
-          selectedTextStyle={{color: '#365AC3', fontWeight: 'bold'}}
+          selectedTextStyle={{color: '#2b4bb0', fontWeight: 'bold'}}
           calendarTextStyle={{color: 'grey'}}
           headerTextStyle={{color: '#303134', fontSize: 20}}
           headerButtonColor="#303134"
@@ -128,23 +147,6 @@ export const Home = () => {
           </Button>
         </View>
       </View>
-      <View style={styles.passwordContainer}>
-        <View
-          style={{
-            height: '35%',
-            backgroundColor: '#4A5A88',
-            width: '100%',
-            justifyContent: 'center',
-            borderTopEndRadius: 15,
-            borderTopLeftRadius: 15,
-          }}>
-          <Text style={styles.labelPassword}>Clave</Text>
-        </View>
-
-        <View style={{height: '65%', justifyContent: 'center'}}>
-          <Text style={styles.textPassword}>{`${currentPassword}`}</Text>
-        </View>
-      </View>
     </View>
   );
 };
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 10,
+    marginTop: 5,
   },
   passwordContainer: {
     display: 'flex',
@@ -173,7 +176,6 @@ const styles = StyleSheet.create({
     height: '10%',
     borderRadius: 20,
     elevation: 10,
-    marginTop: 5,
   },
   labelPassword: {
     fontSize: 10 * 1.3,

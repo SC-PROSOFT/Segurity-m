@@ -23,7 +23,7 @@ export const Navigation = () => {
             headerTitle: 'Autenticación Prosoft',
             headerTitleAlign: 'left',
             headerStyle: {
-              backgroundColor: '#365AC3',
+              backgroundColor: '#2b4bb0',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -51,7 +51,7 @@ export const Navigation = () => {
             headerTitle: 'Autenticación Prosoft',
             headerTitleAlign: 'left',
             headerStyle: {
-              backgroundColor: '#365AC3',
+              backgroundColor: '#2b4bb0',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {

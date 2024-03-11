@@ -1,4 +1,4 @@
-import React, {Ref} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
@@ -11,10 +11,10 @@ interface InputProps {
   label: string;
   name: string;
   mode?: Mode;
-  password?: boolean,
+  password?: boolean;
   keyboardType?: KeyboadType;
+  icon?: string;
   handleInputChange: (name: string, text: string) => void;
-  inputRef?: any; // referencia como es logico no lo pude tipar por ahora // no cachi no es logico att: el mismo cachi. si estoy loquito :/
 }
 
 export const Input_ = ({
@@ -24,19 +24,22 @@ export const Input_ = ({
   mode,
   password = false,
   keyboardType,
+  icon,
   handleInputChange,
-  inputRef,
 }: InputProps) => {
   return (
     <View style={styles.inputContainer}>
+      {/* <Icon name="menu" size={20} color="black" /> */}
       <TextInput
-        ref={inputRef}
         value={value}
         label={label}
         onChangeText={text => handleInputChange(name, text)}
         mode={mode}
         keyboardType={keyboardType}
         secureTextEntry={password}
+        left={
+          icon && <TextInput.Icon icon={icon} size={22} style={styles.icon} />
+        }
         style={styles.input}></TextInput>
     </View>
   );
@@ -50,5 +53,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: 60,
     fontSize: 16,
+  },
+  icon: {
+    borderRightColor: '#2b4bb0',
+    marginTop: 13,
+    borderRightWidth: 0.5,
+    borderRadius: 0
   },
 });

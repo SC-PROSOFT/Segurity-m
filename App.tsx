@@ -22,7 +22,7 @@ const theme = {
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#365AC3',
+    primary: '#2b4bb0',
   },
 };
 
@@ -42,7 +42,8 @@ export default function App() {
   );
 }
 
-//colors: #30313498 #DE3A45 #303134 #365AC3 #19C22A
+//colors: #30313498 #DE3A45 #303134 #2b4bb0 #19C22A
+//contraste mejorado: #243C84
 
 /*
 paleta

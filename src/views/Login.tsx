@@ -55,27 +55,35 @@ const Form: React.FC<any> = ({
 
   return (
     <View style={formStyles.formContainer}>
-      <Input_
-        value={user}
-        label="Usuario"
-        name="user"
-        mode="outlined"
-        keyboardType="default"
-        handleInputChange={handleInputChange}
-      />
+      <View>
+        <Input_
+          value={user}
+          label="Usuario"
+          name="user"
+          mode="outlined"
+          keyboardType="default"
+          icon="account"
+          handleInputChange={handleInputChange}
+        />
+      </View>
 
-      <Input_
-        value={password}
-        label="Contrasena"
-        name="password"
-        password={true}
-        handleInputChange={handleInputChange}
-      />
+      <View style={{marginTop: 5}}>
+        <Input_
+          value={password}
+          label="Contrasena"
+          name="password"
+          mode="outlined"
+          password={true}
+          icon="lock"
+          handleInputChange={handleInputChange}
+        />
+      </View>
+
       <View style={{marginTop: 15}}>
         <Button_
           value="Iniciar sesion"
           pressNormalButton={toggleLoginButton}
-          colorButton="#445FB3"
+          colorButton="#2b4bb0"
         />
       </View>
     </View>
@@ -85,11 +93,7 @@ const Form: React.FC<any> = ({
 const Footer: React.FC<FooterProps> = ({appVersion}) => {
   const footerStyles = StyleSheet.create({
     footerText: {
-      color: '#303134',
-      fontSize: 15,
-    },
-    footerVersionApp: {
-      color: '#303134',
+      color: '#2b4bb0',
       fontSize: 15,
     },
   });
@@ -185,7 +189,7 @@ const Login: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%',
-      height: '35%',
+      height: '40%',
     },
     titleContainer: {
       display: 'flex',
@@ -193,7 +197,7 @@ const Login: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: showLogo ? 0 : 0,
-      height: showLogo ? '5%' : '10%',
+      height: showLogo ? '5%' : '15%',
     },
     formContainer: {
       width: '100%',
@@ -204,7 +208,7 @@ const Login: React.FC = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      height: showLogo ? '15%' : '30%',
+      height: showLogo ? '15%' : '38%',
       paddingBottom: 3,
     },
     pensadorBorder: {
@@ -226,7 +230,7 @@ const Login: React.FC = () => {
     },
     title2: {
       fontWeight: 'bold',
-      color: '#365AC3',
+      color: '#2b4bb0',
       fontSize: 20 * scale,
       marginLeft: 7,
     },
