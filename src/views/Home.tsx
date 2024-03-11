@@ -3,18 +3,26 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
+/* redux hooks */
+import {useAppSelector, useAppDispatch} from '../redux/hooks';
 
 import {otpService} from '../queries/local_database/services';
 
 export const Home = () => {
   const days = dayjs().locale('es').format();
 
+  const objAsesor = useAppSelector(store => store.asesor.objAsesor);
+
   const [date, setDate] = useState<any>(days);
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>('');
 
   useEffect(() => {
     cargarFecha(date);
   }, []);
+  useEffect(() => {
+    generateCurrentGebcPassword();
+  }, [selectedDate]);
 
   const cargarFecha = (dateScope: any) => {
     const date = new Date(dateScope);
@@ -66,27 +74,17 @@ export const Home = () => {
     const mes_del_anio = obtenerMesDelAnio();
     const random_otp_number = (await otpService.getByDia(dia_del_anio))
       .llave_generada;
+    const id_operador = objAsesor.id;
 
     console.log('dia_del_anio', dia_del_anio);
     console.log('mes_del_anio', mes_del_anio);
     console.log('random_otp_number', random_otp_number);
+    console.log('id_operador', id_operador);
 
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentDay = currentDate.getDate();
+    const passwordValues =
+      dia_del_anio + mes_del_anio + random_otp_number + id_operador;
 
-    const passwordValues = {
-      val_1: Number(currentYear.toString().slice(2, 4)) + currentMonth,
-      val_2: Number(currentYear.toString().slice(2, 4)) + currentDay,
-      val_3: currentMonth + currentDay,
-    };
-
-    return `${passwordValues.val_1
-      .toString()
-      .padStart(2, '0')}${passwordValues.val_2
-      .toString()
-      .padStart(2, '0')}${passwordValues.val_3.toString().padStart(2, '0')}`;
+    setCurrentPassword(passwordValues.toString());
   };
 
   return (
@@ -144,9 +142,7 @@ export const Home = () => {
         </View>
 
         <View style={{height: '65%', justifyContent: 'center'}}>
-          <Text style={styles.textPassword}>
-            {`${generateCurrentGebcPassword()}`}
-          </Text>
+          <Text style={styles.textPassword}>{`${currentPassword}`}</Text>
         </View>
       </View>
     </View>

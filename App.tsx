@@ -1,6 +1,10 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 
+/* redux */
+import {Provider as StoreProvider} from 'react-redux';
+/* redux store */
+import {store} from './src/redux/store';
 /* papper */
 import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
 /* context provider */
@@ -24,15 +28,17 @@ const theme = {
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
-      <GlobalProvider>
-        <StatusBar></StatusBar>
-        <Navigation></Navigation>
+    <StoreProvider store={store}>
+      <PaperProvider theme={theme}>
+        <GlobalProvider>
+          <StatusBar></StatusBar>
+          <Navigation></Navigation>
 
-        <DecisionAlert />
-        <InfoAlert />
-      </GlobalProvider>
-    </PaperProvider>
+          <DecisionAlert />
+          <InfoAlert />
+        </GlobalProvider>
+      </PaperProvider>
+    </StoreProvider>
   );
 }
 

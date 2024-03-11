@@ -12,6 +12,7 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 /* components */
 import {Input_, Button_} from '../components';
@@ -19,6 +20,10 @@ import {Input_, Button_} from '../components';
 import {infoAlertContext} from '../context';
 /* local_database */
 import {asesoresService} from '../queries/local_database/services';
+/* redux hooks */
+import {useAppSelector, useAppDispatch} from '../redux/hooks';
+/* redux slices */
+import {setObjAsesor} from '../redux/slices';
 /* dimensiones */
 const windowWidth = Dimensions.get('window').width;
 const scale = windowWidth / 375;
@@ -99,6 +104,8 @@ const Footer: React.FC<FooterProps> = ({appVersion}) => {
 };
 
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   const navigation: any = useNavigation();
 
   const {showInfoAlert} = infoAlertContext();
@@ -128,7 +135,7 @@ const Login: React.FC = () => {
     try {
       const tryLogin = await asesoresService.Login(id, contrasena);
       if (tryLogin) {
-        
+        dispatch(setObjAsesor({id}));
         navigation.replace('Home');
       } else {
         showInfoAlert({
