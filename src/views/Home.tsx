@@ -4,6 +4,8 @@ import {Button} from 'react-native-paper';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 
+import {otpService} from '../queries/local_database/services';
+
 export const Home = () => {
   const days = dayjs().locale('es').format();
 
@@ -41,7 +43,34 @@ export const Home = () => {
     setSelectedDate(fechaFormateada);
   };
 
-  const generateCurrentGebcPassword = () => {
+  const obtenerDiaDelAnio = () => {
+    const fecha_objeto: any = new Date(date);
+
+    const inicio_del_anio: any = new Date(fecha_objeto.getFullYear(), 0, 0);
+    const diferencia = fecha_objeto - inicio_del_anio;
+    const un_dia_en_milisegundos = 1000 * 60 * 60 * 24;
+    const dia_del_anio = Math.floor(diferencia / un_dia_en_milisegundos);
+
+    return dia_del_anio;
+  };
+
+  const obtenerMesDelAnio = () => {
+    const fecha_objeto = new Date(date);
+
+    const mes_del_anio = fecha_objeto.getMonth() + 1; // Agregamos 1 ya que los meses van de 0 a 11
+    return mes_del_anio;
+  };
+
+  const generateCurrentGebcPassword = async () => {
+    const dia_del_anio = obtenerDiaDelAnio();
+    const mes_del_anio = obtenerMesDelAnio();
+    const random_otp_number = (await otpService.getByDia(dia_del_anio))
+      .llave_generada;
+
+    console.log('dia_del_anio', dia_del_anio);
+    console.log('mes_del_anio', mes_del_anio);
+    console.log('random_otp_number', random_otp_number);
+
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
@@ -116,7 +145,7 @@ export const Home = () => {
 
         <View style={{height: '65%', justifyContent: 'center'}}>
           <Text style={styles.textPassword}>
-            {`SC${generateCurrentGebcPassword()}`}
+            {`${generateCurrentGebcPassword()}`}
           </Text>
         </View>
       </View>

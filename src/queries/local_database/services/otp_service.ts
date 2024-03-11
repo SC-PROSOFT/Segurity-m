@@ -19,6 +19,10 @@ class OtpService {
     return this.otpController.fillTable(otp);
   }
 
+  async getByDia(dia: number): Promise<IOtp> {
+    return otpController.getByDia(dia);
+  }
+
   async getAll(): Promise<IOtp[]> {
     return this.otpController.getAll();
   }

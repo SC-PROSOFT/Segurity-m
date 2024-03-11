@@ -118,7 +118,7 @@ class OtpController implements IOtpController<IOtp> {
             resolve(response.rows.raw()[0]);
           },
           (error: ResultSet) => {
-            reject(new Error('Fallo obtener otp'));
+            reject(new Error('Fallo obtener otp por dia'));
           },
         );
       });

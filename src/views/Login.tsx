@@ -128,6 +128,7 @@ const Login: React.FC = () => {
     try {
       const tryLogin = await asesoresService.Login(id, contrasena);
       if (tryLogin) {
+        
         navigation.replace('Home');
       } else {
         showInfoAlert({
