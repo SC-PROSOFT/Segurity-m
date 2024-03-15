@@ -9,8 +9,12 @@ import {
   OtpApiService,
 } from '../queries/api_prosoft/queries';
 /* queries instances */
-const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025');
-const otpApiService = new OtpApiService('192.168.0.173', '5025');
+//const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025'); // cachi
+//const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
+const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
+//const otpApiService = new OtpApiService('192.168.0.173', '5025'); // cachi
+//const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
+const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
 
 /* animacion */
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
