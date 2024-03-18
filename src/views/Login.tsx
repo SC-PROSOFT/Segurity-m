@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import DeviceInfo from 'react-native-device-info';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {
   View,
   Text,
@@ -11,6 +13,7 @@ import {
   SafeAreaView,
   Dimensions,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
@@ -58,7 +61,7 @@ const Form: React.FC<any> = ({
       <View>
         <Input_
           value={user}
-          label="Usuario"
+          label="Operador"
           name="user"
           mode="outlined"
           keyboardType="default"
@@ -83,7 +86,7 @@ const Form: React.FC<any> = ({
         <Button_
           value="Iniciar sesion"
           pressNormalButton={toggleLoginButton}
-          colorButton="#2b4bb0"
+          colorButton="#394D80"
         />
       </View>
     </View>
@@ -93,7 +96,7 @@ const Form: React.FC<any> = ({
 const Footer: React.FC<FooterProps> = ({appVersion}) => {
   const footerStyles = StyleSheet.create({
     footerText: {
-      color: '#2b4bb0',
+      color: '#394D80',
       fontSize: 15,
     },
   });
@@ -138,18 +141,43 @@ const Login: React.FC = () => {
   const login = async ({id, contrasena}: userInfo) => {
     try {
       const tryLogin = await asesoresService.Login(id, contrasena);
-      if (tryLogin) {
+
+      const todos = await asesoresService.getAll();
+
+      const encontrado = todos.find(
+        elem => elem.id == id,
+      );
+
+      console.log('encontrado', encontrado?.contrasena.length);
+
+      console.log('todos', todos);
+      console.log('tryLogin', tryLogin);
+      if (tryLogin.login && tryLogin.estado == 'N') {
+        return showInfoAlert({
+          visible: true,
+          type: 'info',
+          description:
+            'Operador inactivo. Solicita la activacion al equipo de PROSOFT.',
+        });
+      }
+
+      if (tryLogin.login && tryLogin.estado == 'S') {
         dispatch(setObjAsesor({id}));
         navigation.replace('Home');
       } else {
         showInfoAlert({
           visible: true,
-          type: 'error',
-          description: 'Usuario o contraseña invalidos',
+          type: 'info',
+          description: 'Usuario o contraseña invalidos.',
         });
       }
     } catch (error) {
-      console.error('error al iniciar sesion: ', error);
+      showInfoAlert({
+        visible: true,
+        type: 'error',
+        description:
+          'Error En el inicio de sesion, contacta al equipo de desarrollo',
+      });
     }
   };
 
@@ -230,7 +258,7 @@ const Login: React.FC = () => {
     },
     title2: {
       fontWeight: 'bold',
-      color: '#2b4bb0',
+      color: '#394D80',
       fontSize: 20 * scale,
       marginLeft: 7,
     },
@@ -241,6 +269,12 @@ const Login: React.FC = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       <SafeAreaView style={loginStyles.container}>
+        <View style={{padding: 10, position: 'absolute'}}>
+          <TouchableOpacity onPress={() => navigation.replace('Loading')}>
+            <Icon name="cloud-sync-outline" size={30} color="#394D80" />
+          </TouchableOpacity>
+        </View>
+
         {showLogo && (
           <View style={loginStyles.pensadorContainer}>
             <View style={loginStyles.pensadorBorder}>

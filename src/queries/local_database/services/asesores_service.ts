@@ -15,6 +15,10 @@ class AsesoresService {
     return this.asesoresController.createTable();
   }
 
+  async deleteTable(): Promise<boolean> {
+    return this.asesoresController.deleteTable();
+  }
+
   async fillTable(asesores: IAsesor[]): Promise<boolean> {
     return this.asesoresController.fillTable(asesores);
   }
@@ -23,7 +27,10 @@ class AsesoresService {
     return this.asesoresController.getAll();
   }
 
-  async Login(id: number, contrasena: string): Promise<boolean> {
+  async Login(
+    id: number,
+    contrasena: string,
+  ): Promise<{login: boolean; estado: "S" | "N"}> {
     return this.asesoresController.login(id, contrasena);
   }
 }

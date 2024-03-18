@@ -10,11 +10,11 @@ import {
 } from '../queries/api_prosoft/queries';
 /* queries instances */
 //const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025'); // cachi
-//const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
-const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
+const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
+//const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
 //const otpApiService = new OtpApiService('192.168.0.173', '5025'); // cachi
-//const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
-const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
+const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
+//const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
 
 /* animacion */
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
@@ -59,7 +59,11 @@ const Loading: React.FC = () => {
   const loadAsesores = async (): Promise<boolean> => {
     try {
       const asesores: IAsesor[] = await asesoresApiService._getAsesores();
-      if (asesores.length > 0) await asesoresService.fillTable(asesores);
+
+      if (asesores.length > 0) {
+        await asesoresService.deleteTable();
+        await asesoresService.fillTable(asesores);
+      }
       return true;
     } catch (error: any) {
       throw error;

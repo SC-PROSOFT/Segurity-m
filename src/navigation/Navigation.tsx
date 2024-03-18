@@ -20,10 +20,29 @@ export const Navigation = () => {
           options={{
             headerShown: false,
             title: 'Contraseña',
-            headerTitle: 'Autenticación Prosoft',
+            headerTitle: 'Autenticación GEBC',
             headerTitleAlign: 'left',
             headerStyle: {
-              backgroundColor: '#2b4bb0',
+              backgroundColor: '#394D80',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            },
+            headerRight: () => <Menu_ />,
+          }}></Stack.Screen>
+
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: true,
+            title: 'Contraseña',
+            headerTitle: 'Autenticacion',
+            headerTitleAlign: 'left',
+            headerStyle: {
+              backgroundColor: '#394D80',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -40,25 +59,6 @@ export const Navigation = () => {
             title: 'Iniciar sesion',
             headerTitleAlign: 'center',
             headerShown: false,
-          }}></Stack.Screen>
-
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerShown: true,
-            title: 'Contraseña',
-            headerTitle: 'Autenticación Prosoft',
-            headerTitleAlign: 'left',
-            headerStyle: {
-              backgroundColor: '#2b4bb0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
-            headerRight: () => <Menu_ />,
           }}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

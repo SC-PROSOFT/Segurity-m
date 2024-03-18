@@ -6,9 +6,13 @@ import {db} from '../local_database_config';
 
 interface IAsesoresController<T> {
   createTable?(): Promise<boolean>;
+  deleteTable(): Promise<boolean>;
   fillTable(asesores: T[]): Promise<boolean>;
   getById(id: number): Promise<T>;
-  login(id: number, password: string): Promise<boolean>;
+  login(
+    id: number,
+    password: string,
+  ): Promise<{login: boolean; estado: 'S' | 'N'}>;
 }
 
 class AsesoresController implements IAsesoresController<IAsesor> {
@@ -18,7 +22,7 @@ class AsesoresController implements IAsesoresController<IAsesor> {
         id INTEGER PRIMARY KEY,
         nombre TEXT CHECK(length(nombre) <= 30),
         contrasena TEXT CHECK(length(contrasena) <= 30),
-        estado INTEGER CHECK(estado IN (0, 1))
+        estado TEXT CHECK (estado IN ('S', 'N'))
     )
     `;
 
@@ -32,6 +36,25 @@ class AsesoresController implements IAsesoresController<IAsesor> {
           },
           (error: ResultSet) => {
             reject(new Error('Fallo crear tabla asesores'));
+          },
+        );
+      });
+    });
+  }
+
+  async deleteTable(): Promise<boolean> {
+    const sqlDeleteStatement = `DELETE FROM asesores`;
+
+    return new Promise((resolve, reject) => {
+      db.transaction((tx: any) => {
+        tx.executeSql(
+          sqlDeleteStatement,
+          null,
+          (_: ResultSet, result: ResultSet) => {
+            resolve(true);
+          },
+          (error: ResultSet) => {
+            reject(error);
           },
         );
       });
@@ -58,6 +81,8 @@ class AsesoresController implements IAsesoresController<IAsesor> {
         asesor.contrasena,
         asesor.estado,
       ]);
+
+      console.log('values ------> ', values);
 
       return new Promise((resolve, reject) => {
         db.transaction((tx: any) => {
@@ -154,7 +179,12 @@ class AsesoresController implements IAsesoresController<IAsesor> {
     });
   }
 
-  async login(id: number, contrasena: string): Promise<boolean> {
+  async login(
+    id: number,
+    contrasena: string,
+  ): Promise<{login: boolean; estado: 'S' | 'N'}> {
+    console.log('id', id);
+    console.log('contrasena', contrasena);
     const sqlSelectStatement = `
         SELECT * FROM asesores WHERE id= '${id}' AND contrasena= '${contrasena}';
     `;
@@ -165,11 +195,10 @@ class AsesoresController implements IAsesoresController<IAsesor> {
           sqlSelectStatement,
           null,
           (_: ResultSet, response: ResultSet) => {
-            console.log();
             if (response.rows.raw().length == 0) {
-              resolve(false);
+              resolve({login: false, estado: 'N'});
             } else {
-              resolve(true);
+              resolve({login: true, estado: response.rows.raw()[0].estado});
             }
           },
           (error: ResultSet) => {
