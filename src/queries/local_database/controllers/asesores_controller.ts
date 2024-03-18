@@ -82,8 +82,6 @@ class AsesoresController implements IAsesoresController<IAsesor> {
         asesor.estado,
       ]);
 
-      console.log('values ------> ', values);
-
       return new Promise((resolve, reject) => {
         db.transaction((tx: any) => {
           tx.executeSql(
@@ -183,8 +181,6 @@ class AsesoresController implements IAsesoresController<IAsesor> {
     id: number,
     contrasena: string,
   ): Promise<{login: boolean; estado: 'S' | 'N'}> {
-    console.log('id', id);
-    console.log('contrasena', contrasena);
     const sqlSelectStatement = `
         SELECT * FROM asesores WHERE id= '${id}' AND contrasena= '${contrasena}';
     `;
@@ -202,7 +198,6 @@ class AsesoresController implements IAsesoresController<IAsesor> {
             }
           },
           (error: ResultSet) => {
-            console.log('el error: ', error);
             reject(new Error('Fallo al iniciar sesion'));
           },
         );

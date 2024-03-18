@@ -144,14 +144,8 @@ const Login: React.FC = () => {
 
       const todos = await asesoresService.getAll();
 
-      const encontrado = todos.find(
-        elem => elem.id == id,
-      );
+      const encontrado = todos.find(elem => elem.id == id);
 
-      console.log('encontrado', encontrado?.contrasena.length);
-
-      console.log('todos', todos);
-      console.log('tryLogin', tryLogin);
       if (tryLogin.login && tryLogin.estado == 'N') {
         return showInfoAlert({
           visible: true,

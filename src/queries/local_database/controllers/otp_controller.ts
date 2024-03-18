@@ -59,7 +59,6 @@ class OtpController implements IOtpController<IOtp> {
               resolve(result.rows.raw());
             },
             (error: Error) => {
-              console.log('el error: ', error);
               reject(new Error('Fallo guardar bloque otp'));
             },
           );
