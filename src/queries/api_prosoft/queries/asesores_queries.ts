@@ -13,9 +13,13 @@ class AsesoresApiService {
 
   _getAsesores = async () => {
     try {
+      let busco = this.axiosInstance.getUri();
+      console.log('busco', busco)
+
       const response = await this.axiosInstance.get(
         'v1/contabilidad/get-asesores',
       );
+      console.log('response', response);
       return response.data.data;
     } catch (error: any) {
       if (error?.message == 'Network Error') {

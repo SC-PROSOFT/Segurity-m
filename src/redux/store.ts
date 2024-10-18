@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
 
 import asesorReducer from './slices/asesorSlice';
+import directionIpConfigReducer from './slices/directionIpConfigSlice';
 
 export const store = configureStore({
   reducer: {
     asesor: asesorReducer,
+    directionIpConfig: directionIpConfigReducer,
   },
 });
 

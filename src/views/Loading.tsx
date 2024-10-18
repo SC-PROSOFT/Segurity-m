@@ -3,18 +3,20 @@ import {View, StyleSheet, Animated, Easing} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 
+/* redux */
+import {useAppSelector} from '../redux/hooks';
 /* queries */
 import {
   AsesoresApiService,
   OtpApiService,
 } from '../queries/api_prosoft/queries';
 /* queries instances */
-//const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025'); // cachi
-const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
-//const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
-//const otpApiService = new OtpApiService('192.168.0.173', '5025'); // cachi
-const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
-//const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
+// //const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025'); // cachi
+// const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
+// //const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
+// //const otpApiService = new OtpApiService('192.168.0.173', '5025'); // cachi
+// const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
+// //const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
 
 /* animacion */
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
@@ -25,8 +27,20 @@ import {IAsesor, IOtp} from '../common/types';
 
 const Loading: React.FC = () => {
   const navigation: any = useNavigation();
-
   const animationProgress = useRef(new Animated.Value(0));
+
+  const objDirectionIpConfig = useAppSelector(
+    store => store.directionIpConfig.objDirectionIpConfig,
+  );
+
+  const asesoresApiService = new AsesoresApiService(
+    objDirectionIpConfig.ip,
+    objDirectionIpConfig.port,
+  );
+  const otpApiService = new OtpApiService(
+    objDirectionIpConfig.ip,
+    objDirectionIpConfig.port,
+  );
 
   useEffect(() => {
     initialCharge();
@@ -48,6 +62,7 @@ const Loading: React.FC = () => {
 
       navigation.replace('Login');
     } catch (error: any) {
+      console.log('error', error);
       if (error?.message == 'Network Error') {
         navigation.replace('Login');
       } else {
@@ -59,6 +74,7 @@ const Loading: React.FC = () => {
   const loadAsesores = async (): Promise<boolean> => {
     try {
       const asesores: IAsesor[] = await asesoresApiService._getAsesores();
+      console.log('asesores', asesores);
 
       if (asesores.length > 0) {
         await asesoresService.deleteTable();

@@ -18,7 +18,7 @@ import {
 
 import {useNavigation} from '@react-navigation/native';
 /* components */
-import {Input_, Button_} from '../components';
+import {Input_, Button_, DirectionIpConfig} from '../components';
 /* context */
 import {infoAlertContext} from '../context';
 /* local_database */
@@ -26,7 +26,7 @@ import {asesoresService} from '../queries/local_database/services';
 /* redux hooks */
 import {useAppSelector, useAppDispatch} from '../redux/hooks';
 /* redux slices */
-import {setObjAsesor} from '../redux/slices';
+import {setObjAsesor, setObjDirectionIpConfig} from '../redux/slices';
 /* dimensiones */
 const windowWidth = Dimensions.get('window').width;
 const scale = windowWidth / 375;
@@ -123,6 +123,7 @@ const Login: React.FC = () => {
   });
   const [appVersion, setAppVersion] = useState('');
   const [showLogo, setShowLogo] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
 
   /* procedure */
   useEffect(() => {
@@ -143,6 +144,8 @@ const Login: React.FC = () => {
       const tryLogin = await asesoresService.Login(id, contrasena);
 
       const todos = await asesoresService.getAll();
+
+      console.log('todos', todos)
 
       const encontrado = todos.find(elem => elem.id == id);
 
@@ -199,6 +202,16 @@ const Login: React.FC = () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
+  };
+
+  const hideDirectionIpConfig = () => {
+    setVisible(false);
+  };
+
+  const saveDirectionIpConfig = ({ip, port}: {ip: string; port: string}) => {
+    dispatch(setObjDirectionIpConfig({ip, port}));
+
+    hideDirectionIpConfig();
   };
 
   const loginStyles = StyleSheet.create({
@@ -263,9 +276,20 @@ const Login: React.FC = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       <SafeAreaView style={loginStyles.container}>
-        <View style={{padding: 10, position: 'absolute'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            padding: 10,
+            position: 'absolute',
+          }}>
           <TouchableOpacity onPress={() => navigation.replace('Loading')}>
             <Icon name="cloud-sync-outline" size={30} color="#394D80" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setVisible(true)}>
+            <Icon name="application-cog" size={30} color="#394D80" />
           </TouchableOpacity>
         </View>
 
@@ -296,6 +320,12 @@ const Login: React.FC = () => {
           <Footer appVersion={appVersion}></Footer>
         </View>
       </SafeAreaView>
+
+      <DirectionIpConfig
+        visible={visible}
+        hideDirectionIpConfig={hideDirectionIpConfig}
+        saveDirectionIpConfig={saveDirectionIpConfig}
+      />
     </KeyboardAvoidingView>
   );
 };
