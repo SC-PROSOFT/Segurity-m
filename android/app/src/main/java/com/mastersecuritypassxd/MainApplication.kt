@@ -1,4 +1,4 @@
-package com.mastersecuritypassxd
+package com.GEBC
 
 import android.app.Application
 import com.facebook.react.PackageList

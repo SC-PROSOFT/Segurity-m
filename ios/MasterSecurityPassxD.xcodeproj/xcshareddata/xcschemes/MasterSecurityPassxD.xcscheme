@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MasterSecurityPassxD.app"
-               BlueprintName = "MasterSecurityPassxD"
-               ReferencedContainer = "container:MasterSecurityPassxD.xcodeproj">
+               BuildableName = "GEBC.app"
+               BlueprintName = "GEBC"
+               ReferencedContainer = "container:GEBC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MasterSecurityPassxDTests.xctest"
-               BlueprintName = "MasterSecurityPassxDTests"
-               ReferencedContainer = "container:MasterSecurityPassxD.xcodeproj">
+               BuildableName = "GEBCTests.xctest"
+               BlueprintName = "GEBCTests"
+               ReferencedContainer = "container:GEBC.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MasterSecurityPassxD.app"
-            BlueprintName = "MasterSecurityPassxD"
-            ReferencedContainer = "container:MasterSecurityPassxD.xcodeproj">
+            BuildableName = "GEBC.app"
+            BlueprintName = "GEBC"
+            ReferencedContainer = "container:GEBC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MasterSecurityPassxD.app"
-            BlueprintName = "MasterSecurityPassxD"
-            ReferencedContainer = "container:MasterSecurityPassxD.xcodeproj">
+            BuildableName = "GEBC.app"
+            BlueprintName = "GEBC"
+            ReferencedContainer = "container:GEBC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
