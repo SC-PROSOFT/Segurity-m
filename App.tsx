@@ -13,8 +13,6 @@ import GlobalProvider from './src/context/GlobalProvider';
 import {DecisionAlert, InfoAlert} from './src/components';
 /* navigation */
 import {Navigation} from './src/navigation/Navigation';
-/* react query */
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 /* papper theme */
 const theme = {

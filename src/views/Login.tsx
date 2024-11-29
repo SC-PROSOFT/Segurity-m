@@ -24,7 +24,7 @@ import {infoAlertContext} from '../context';
 /* local_database */
 import {asesoresService} from '../queries/local_database/services';
 /* redux hooks */
-import {useAppSelector, useAppDispatch} from '../redux/hooks';
+import {useAppDispatch} from '../redux/hooks';
 /* redux slices */
 import {setObjAsesor, setObjDirectionIpConfig} from '../redux/slices';
 /* dimensiones */
@@ -145,7 +145,7 @@ const Login: React.FC = () => {
 
       const todos = await asesoresService.getAll();
 
-      console.log('todos', todos)
+      console.log('todos', todos);
 
       const encontrado = todos.find(elem => elem.id == id);
 

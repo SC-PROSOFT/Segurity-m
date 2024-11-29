@@ -10,20 +10,13 @@ import {
   AsesoresApiService,
   OtpApiService,
 } from '../queries/api_prosoft/queries';
-/* queries instances */
-// //const asesoresApiService = new AsesoresApiService('192.168.0.173', '5025'); // cachi
-// const asesoresApiService = new AsesoresApiService('192.168.0.51', '5025'); // carlos
-// //const asesoresApiService = new AsesoresApiService('192.168.0.185', '5025'); // urga
-// //const otpApiService = new OtpApiService('192.168.0.173', '5025'); // cachi
-// const otpApiService = new OtpApiService('192.168.0.51', '5025'); // carlos
-// //const otpApiService = new OtpApiService('192.168.0.185', '5025'); // urga
-
-/* animacion */
-const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 /* local_database */
 import {createTables} from '../queries/local_database/local_database_config';
 import {asesoresService, otpService} from '../queries/local_database/services';
+/* types */
 import {IAsesor, IOtp} from '../common/types';
+
+const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
 const Loading: React.FC = () => {
   const navigation: any = useNavigation();
@@ -62,7 +55,6 @@ const Loading: React.FC = () => {
 
       navigation.replace('Login');
     } catch (error: any) {
-      console.log('error', error);
       if (error?.message == 'Network Error') {
         navigation.replace('Login');
       } else {
@@ -74,7 +66,6 @@ const Loading: React.FC = () => {
   const loadAsesores = async (): Promise<boolean> => {
     try {
       const asesores: IAsesor[] = await asesoresApiService._getAsesores();
-      console.log('asesores', asesores);
 
       if (asesores.length > 0) {
         await asesoresService.deleteTable();
@@ -109,11 +100,5 @@ const Loading: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  texto: {
-    color: 'black',
-  },
-});
 
 export {Loading};

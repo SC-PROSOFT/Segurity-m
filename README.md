@@ -25,20 +25,14 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 ### For Android
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
+using Yarn
 yarn android
 ```
 
 ### For iOS
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
+using Yarn
 yarn ios
 ```
 
@@ -46,34 +40,40 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+# Detalles Adicionales
 
-Now that you have successfully run the app, let's modify it.
+## Vista General de la Base de Datos
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+### Tablas
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+1. **Tabla OTP**  
+   - Esta tabla se genera automáticamente al ejecutar el backend.  
 
-## Congratulations! :tada:
+2. **Tabla ASESOR**  
+   - Esta tabla debe llenarse manualmente a través de un gestor de bases de datos como **DBViewer**.  
+   - Cada entrada en esta tabla representa un asesor (ASESOR) con sus credenciales correspondientes.
 
-You've successfully run and modified your React Native App. :partying_face:
+---
 
-### Now what?
+## Proceso de Sincronización
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+La aplicación realiza un proceso de sincronización en dos pasos para asegurarse de que la base de datos local esté actualizada con los datos del servidor:
 
-# Troubleshooting
+1. **Obtener Asesores**  
+   La aplicación recupera la lista de asesores creados en el sistema contable y los guarda en la base de datos local.
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+2. **Obtener OTPs**  
+   La aplicación descarga los registros de OTP generados en el servidor y los guarda en la base de datos local.
 
-# Learn More
+Estos dos pasos son fundamentales para sincronizar los datos del celular con los del servidor.
 
-To learn more about React Native, take a look at the following resources:
+---
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Inicio de Sesión
+
+- El **ASESOR** debe iniciar sesión en la aplicación utilizando el usuario y la contraseña creados en la tabla **ASESOR**.
+- Sin credenciales válidas, la aplicación no permitirá el acceso a sus funcionalidades.
+
+---
+
+Este proceso garantiza una sincronización fluida y un acceso seguro a las funciones de la aplicación.
